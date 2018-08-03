@@ -9,8 +9,8 @@ package org.usfirst.frc.team4564.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+
 
 
 public class Robot extends TimedRobot {
@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
 		j = new Xbox(0);
 		
 		super.setPeriod(1/Constants.REFRESH_RATE);
+		
 	}
 	@Override
 	public void autonomousInit() {
@@ -42,8 +43,8 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		double power = j.getY(GenericHID.Hand.kLeft);
 		double turn = j.getX(GenericHID.Hand.kLeft);
-		
 		dt.accelDrive(power, turn);
+		SmartDashboard.putNumber("Input power: ", power);
 	}
 
 	

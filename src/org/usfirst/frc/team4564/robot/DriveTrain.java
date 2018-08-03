@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Handles actions related to robot motion.
@@ -41,7 +42,7 @@ public class DriveTrain extends DifferentialDrive {
 	private Encoder encoderL, encoderR;
 	private PID pidL, pidR;
 	private Heading heading;
-	private Solenoid shifter;
+	//private Solenoid shifter;
 	private double driveSpeed = 0, turnSpeed = 0;
 	private double tankLeft = 0, tankRight = 0;
 	
@@ -59,7 +60,7 @@ public class DriveTrain extends DifferentialDrive {
 		encoderR.setDistancePerPulse(DISTANCE_PER_PULSE_R);
 		encoderR.setSamplesToAverage(10);
 		heading = new Heading();
-		shifter = new Solenoid(Constants.PCM_CAN_ID, Constants.SHIFTER);
+		//shifter = new Solenoid(Constants.PCM_CAN_ID, Constants.SHIFTER);
 		
 		pidL = new PID(0.005, 0, 0, false, true, "velL");
 		pidR = new PID(0.005, 0, 0, false, true, "velR");
@@ -70,15 +71,16 @@ public class DriveTrain extends DifferentialDrive {
 	/**
 	 * Shifts the drivetrain gearbox to high gear.
 	 */
+	
 	public void shiftHigh() {
-		shifter.set(false);
+		//shifter.set(false);
 	}
 	
 	/**
 	 * Shifts the drivetrain gearbox to low gear.
 	 */
 	public void shiftLow() {
-		shifter.set(true);
+		//shifter.set(true);
 	}
 	
 	/**
@@ -87,7 +89,8 @@ public class DriveTrain extends DifferentialDrive {
 	 * @return - is low
 	 */
 	public boolean isShiftedLow() {
-		return shifter.get();
+		//return shifter.get();
+		return true;
 	}
 	
 	/**
@@ -283,6 +286,7 @@ public class DriveTrain extends DifferentialDrive {
 	public void accelDrive(double drive, double turn) {
 		drive = driveAccelCurve(drive);
 		turn = turnAccelCurve(turn);
+		SmartDashboard.putNumber("Power: ", drive);
 		arcadeDrive(drive, -turn);
 	}
 	
