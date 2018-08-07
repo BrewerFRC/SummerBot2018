@@ -5,15 +5,19 @@ public class Constants {
 	
 	REFRESH_RATE = 50,
 	
-	DRIVE_FL = 0,
-	DRIVE_FR = 1,
-	DRIVE_BL = 3,
-	DRIVE_BR = 4,
+	DRIVE_FL = 6,
+	DRIVE_FR = 8,
+	DRIVE_BL = 7,
+	DRIVE_BR = 9,
 	
-	DRIVE_ENCODER_LA = 6,
-	DRIVE_ENCODER_RA = 8,
-	DRIVE_ENCODER_LB = 7,
-	DRIVE_ENCODER_RB = 9,
+	
+	
+	DRIVE_ENCODER_LA = 1,
+	DRIVE_ENCODER_RA = 2,
+	DRIVE_ENCODER_LB = 3,
+	DRIVE_ENCODER_RB = 4,
+	
+	
 	
 	/** 
 	 * Solenoid stuff

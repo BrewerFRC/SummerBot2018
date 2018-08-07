@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4564.robot;
 
+
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -22,14 +23,15 @@ public class DriveTrain extends DifferentialDrive {
 	
 	public static double DRIVEACCEL = 0.01, DRIVEMIN = 0.4;
 
-	public static final double TURNACCEL = .06;
+	public static final double TURNACCEL = 0.06;
 
 	public static final double TANKACCEL = 0.01;
 
 	public static final double TANKMIN = 0.40;
 
-	public static final double TURNMAX = .8;
+	public static final double TURNMAX = 0.65;
 	
+	public static final double TANKMAX = 0.4;
 	private static final double DISTANCE_PER_PULSE_L = 0.0098195208, DISTANCE_PER_PULSE_R = 0.0098293515;
 	private static final Spark 
 			frontL = new Spark(Constants.DRIVE_FL),
@@ -64,6 +66,9 @@ public class DriveTrain extends DifferentialDrive {
 		
 		pidL = new PID(0.005, 0, 0, false, true, "velL");
 		pidR = new PID(0.005, 0, 0, false, true, "velR");
+		
+		left.setInverted(true);
+		right.setInverted(true);
 		
 		instance = this;
 	}
@@ -340,9 +345,11 @@ public class DriveTrain extends DifferentialDrive {
 			//Move to the lesser value of the minimum or the target, including desired direction.
 			if (target > 0) {
 				current = Math.min(TANKMIN, target);
+				current = Math.max(TANKMAX, target);
 			}
 			else {
 				current = Math.max(-TANKMIN, target);
+				current = Math.min(-TANKMAX, target);
 			}
 		}
 		//If the magnitude of current is greater than the minimum

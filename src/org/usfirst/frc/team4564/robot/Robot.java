@@ -14,15 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 
 
 public class Robot extends TimedRobot {
-	private DriveTrain dt;
-	private Xbox j;
-	
+	private Xbox driver = new Xbox(0);
+	private DriveTrain dt = new DriveTrain();
 	
 	@Override
 	public void robotInit() {
-		dt = new DriveTrain();
+		
 		dt.getHeading().calibrate();
-		j = new Xbox(0);
 		
 		super.setPeriod(1/Constants.REFRESH_RATE);
 		
@@ -41,8 +39,8 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void teleopPeriodic() {
-		double power = j.getY(GenericHID.Hand.kLeft);
-		double turn = j.getX(GenericHID.Hand.kLeft);
+		double power = driver.getY(GenericHID.Hand.kLeft);
+		double turn = driver.getX(GenericHID.Hand.kLeft);
 		dt.accelDrive(power, turn);
 		SmartDashboard.putNumber("Input power: ", power);
 	}
