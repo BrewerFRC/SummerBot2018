@@ -216,7 +216,7 @@ public class PositionByVelocityPID {
 	 * @param input - the current position of the system.
 	 * @return the suggested velocity to reach the target position.
 	 */
-	public double calcPosition(double input) {
+	private double calcPosition(double input) {
 		return position.calc(input);
 	}
 	

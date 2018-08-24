@@ -17,7 +17,14 @@ public class Constants {
 	DRIVE_ENCODER_RB = 4,
 	IR_PORT = 3,
 	
-	
+	ARM_M = 10,
+	ARM_POT = 9,
+
+	ARM_POT_SCALAR = 0,
+	ARM_MIN_DEG = 0,
+	ARM_MAX_DEG = 180,
+
+	ARM_MIN_ACC, ARM_MAX_ACC = 
 	
 	/** 
 	 * Solenoid stuff
@@ -32,11 +39,12 @@ public class Constants {
 	MAX_ACCEL = 0.5,
 	
 	ARMP = 1,
-	ARMI = 1,
-	ARMD = 1,
+	ARMI = 0,
+	ARMD = 0,
 
 	HEADINGP = DriveTrain.TURNMAX/10,
 	HEADINGI = 0,
 	HEADINGD = 0
+
 	;
 }

@@ -17,26 +17,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	private Xbox driver = new Xbox(0);
 	private DriveTrain dt = new DriveTrain();
-	private PID pidarmobj;
-	private PID pidheadingobj;
 	private ADXRS450_Gyro gyro;
-	private double target;
+	private Arm arm;
 	
 	private Proximity proximitysensor;
 	@Override
 	public void robotInit() {
 		super.setPeriod(1/Constants.REFRESH_RATE);
-		
-		pidarmobj = new PID(Constants.ARMP, Constants.ARMI, Constants.ARMD, false, false, "Arm position");
-		pidheadingobj = new PID(Constants.HEADINGP, Constants.HEADINGI, Constants.HEADINGD, false, false, "Heading");
-		
-		gyro = new ADXRS450_Gyro();
-		gyro.calibrate();
-		target = 0;
-
 		proximitysensor = new Proximity(Constants.IR_PORT);
 
-		pidheadingobj.setOutputLimits(-DriveTrain.TURNMAX, DriveTrain.TURNMAX);
 	}
 	@Override
 	public void autonomousInit() {
@@ -87,7 +76,6 @@ public class Robot extends TimedRobot {
 		
 		SmartDashboard.putNumber("True Infared Dist", infaredDist);
 		dt.arcadeDrive(power, turn);
-		pidheadingobj.update();
 	}
 
 	
