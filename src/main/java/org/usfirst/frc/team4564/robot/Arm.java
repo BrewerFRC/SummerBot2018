@@ -15,6 +15,8 @@ public class Arm {
     private double target = 90;
     private double position;
     private double lastpos;
+    private double curV;
+
 
     public Arm(){
         arm = new TalonSRX(Constants.ARM_M);
@@ -31,7 +33,8 @@ public class Arm {
 
     }
     public void ArmUpdate(){
-        double power = veloPID.calc(position, curVelocity);
+        curV = position - lastpos;
+        double power = veloPID.calc(position, curV);
 
         arm.set(ControlMode.PercentOutput, power);
 
