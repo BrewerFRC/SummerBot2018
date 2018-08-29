@@ -19,7 +19,8 @@ public class Robot extends TimedRobot {
 	private DriveTrain dt = new DriveTrain();
 	private ADXRS450_Gyro gyro;
 	private Arm arm;
-	
+	private Auto auto;
+
 	private Proximity proximitysensor;
 	@Override
 	public void robotInit() {
@@ -29,7 +30,7 @@ public class Robot extends TimedRobot {
 	}
 	@Override
 	public void autonomousInit() {
-	
+		auto = new Auto(dt, gyro, arm);
 	}
 
 	

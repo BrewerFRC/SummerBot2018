@@ -23,7 +23,7 @@ public class Arm {
 
         pot = new AnalogPotentiometer(Constants.ARM_POT, Constants.ARM_POT_SCALAR);
         veloPID = new PositionByVelocityPID(Constants.ARM_MIN_DEG, Constants.ARM_MAX_DEG, , maxVelocity, minPower, ARMMAXACCEL, minPowerMagnitude, "Arm Velocity PID");
-        position = GetPosition();
+        position = GetPosition(); 
         lastpos = position;
 
     }
