@@ -22,7 +22,7 @@ public class Arm {
         arm = new TalonSRX(Constants.ARM_M);
 
         pot = new AnalogPotentiometer(Constants.ARM_POT, Constants.ARM_POT_SCALAR);
-        veloPID = new PositionByVelocityPID(Constants.ARM_MIN_DEG, Constants.ARM_MAX_DEG, , maxVelocity, minPower, ARMMAXACCEL, minPowerMagnitude, "Arm Velocity PID");
+        //veloPID = new PositionByVelocityPID(Constants.ARM_MIN_DEG, Constants.ARM_MAX_DEG, , maxVelocity, minPower, ARMMAXACCEL, minPowerMagnitude, "Arm Velocity PID");
         position = GetPosition(); 
         lastpos = position;
 

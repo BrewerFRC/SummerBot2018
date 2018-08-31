@@ -5,7 +5,7 @@ public class Constants {
 	
 	REFRESH_RATE = 50,
 	
-	//Ports
+	//DIO
 	DRIVE_FL = 6,
 	DRIVE_FR = 8,
 	DRIVE_BL = 7,
@@ -15,22 +15,19 @@ public class Constants {
 	DRIVE_ENCODER_RA = 2,
 	DRIVE_ENCODER_LB = 3,
 	DRIVE_ENCODER_RB = 4,
-	IR_PORT = 3,
 	
-	ARM_M = 10,
+	ARM_M = 5,
+	//Analog Input
+	IR_PORT = 3,
 	ARM_POT = 9,
 
+	//MISC.
 	ARM_POT_SCALAR = 0,
 	ARM_MIN_DEG = 0,
-	ARM_MAX_DEG = 180,
+	ARM_MAX_DEG = 180
 
-	ARM_MIN_ACC, ARM_MAX_ACC = 
+	//ARM_MIN_ACC, ARM_MAX_ACC = 
 	
-	/** 
-	 * Solenoid stuff
-	 */
-	PCM_CAN_ID = 1, //The id of the solenoid board
-	SHIFTER = 1 //The channel of the shifter on the solenoid board
 	
 	
 	;

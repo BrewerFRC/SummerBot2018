@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
 	private DriveTrain dt = new DriveTrain();
 	private ADXRS450_Gyro gyro;
 	private Arm arm;
-	private Auto auto;
+	private Auto auto = new Auto(dt, gyro, arm);
 
 	private Proximity proximitysensor;
 	@Override
@@ -30,53 +30,38 @@ public class Robot extends TimedRobot {
 	}
 	@Override
 	public void autonomousInit() {
-		auto = new Auto(dt, gyro, arm);
+
 	}
 
 	
 	@Override
 	public void autonomousPeriodic() {
-		
+		auto.update();
 	}
 	@Override
 	public void teleopInit() {
-		gyro.reset();
+		
 	}
 	
 	@Override
 	public void teleopPeriodic() {
+		if(driver.getPressed("a")){
+			auto.start();
+		}
+		auto.update();
+		/*
 		double power = driver.getY(GenericHID.Hand.kLeft);
 		double turn = driver.getX(GenericHID.Hand.kLeft);
 		
 		SmartDashboard.putNumber("Input power", power);
 		
-		//double turn;
-		/*double headingdeg = gyro.getAngle();
-		SmartDashboard.putNumber("Angle", headingdeg);
-		if(driver.getPressed("a")){
-			turn = pidheadingobj.calc(headingdeg);
-			
-			
-			if(driver.when("dPadRight")){
-				target+= 20;
-				System.out.println("TestBot zeig heil!");
-
-			}
-			if(driver.when("dPadLeft")){
-				target-= 20;
-			}
-		}
-		else{
-			turn = 0;
-		}
-		*/
-		//pidheadingobj.setTarget(target);
-
+		
 		double infaredRaw = proximitysensor.CheckInfaredSensor();
 		double infaredDist = proximitysensor.ToDist((float)infaredRaw);
 		
 		SmartDashboard.putNumber("True Infared Dist", infaredDist);
 		dt.arcadeDrive(power, turn);
+		*/
 	}
 
 	
