@@ -22,7 +22,8 @@ public class Auto{
     private static final int LAUNCH_LEFT = 5;
     private static final int LAUNCH_RIGHT = 6;
     
-    public static final float INITIAL_TURN = 0.2f;
+    public static final double INITIAL_TURN = 0.37;
+    public static final double INITIAL_SPEED = -0.73;
 
     double speed;
     double turn;
@@ -44,7 +45,7 @@ public class Auto{
 
     public void init(){
         SmartDashboard.putNumber("Turn", INITIAL_TURN);
-        SmartDashboard.putNumber("Speed", 0.5f);
+        SmartDashboard.putNumber("Speed", INITIAL_SPEED);
     }
 
     public void update(){
@@ -71,22 +72,21 @@ public class Auto{
                 case INIT:
                     timer = Common.time();
 
-                    speed = SmartDashboard.getNumber("Speed", 0.5f);
+                    speed = SmartDashboard.getNumber("Speed",INITIAL_SPEED);
                     turn = SmartDashboard.getNumber("Turn", INITIAL_TURN);
 
                     state = FIRST_TURN;
                     break;
                 case FIRST_TURN:
                     dt.arcadeDrive(speed, turn);
-                    if(Common.time() - timer >= 500){
+                    if(Common.time() - timer >= 1500){
                         timer = Common.time();
                         state = SECOND_TURN;
                     }
                     break;
                 case SECOND_TURN:
                     dt.arcadeDrive(speed, -turn);
-                    if(Common.time() - timer >= 500){
-                        timer = Common.time();
+                    if(Common.time() - timer >= 1800){                        timer = Common.time();
                         state = IDLE;
                     }
                     break;
