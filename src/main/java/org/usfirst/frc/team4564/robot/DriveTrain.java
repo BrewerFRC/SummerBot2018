@@ -72,6 +72,9 @@ public class DriveTrain extends DifferentialDrive {
 		instance = this;
 	}
 	
+
+
+
 	/**
 	 * Shifts the drivetrain gearbox to high gear.
 	 */
@@ -229,15 +232,9 @@ public class DriveTrain extends DifferentialDrive {
 	 * @return double - the allowed drive value for this cycle.
 	 */
 	public double driveAccelCurve(double target) {
-		//If the magnitude of current is less than the minimum
-		if (Math.abs(driveSpeed) < DRIVEMIN) {
-			//Move to the lesser value of the minimum or the target, including desired direction.
-			if (target > 0) {
-				driveSpeed = Math.min(DRIVEMIN, target);
-			}
-			else {
-				driveSpeed = Math.max(-DRIVEMIN, target);
-			}
+		//nullzone 
+		if (Math.abs(target) < .03) {
+			target = 0;
 		}
 		//If the magnitude of current is greater than the minimum
 		//If the difference is greater than the allowed acceleration
@@ -248,11 +245,19 @@ public class DriveTrain extends DifferentialDrive {
             } else {
                 driveSpeed = driveSpeed + DRIVEACCEL;
             }
-        }
-		//If the difference is less than the allowed acceleration, reach target
-		else {
+        } else {
             driveSpeed = target;
-        }
+		}
+		//If the magnitude of current speed is less than the minimum
+		//Move to the greater of the minimum or the driveSpeed.
+		if (Math.abs(target) > 0) {
+			if (target > 0) {
+				driveSpeed = Math.max(DRIVEMIN, driveSpeed);
+			}
+			else {
+				driveSpeed = Math.min(-DRIVEMIN, driveSpeed);
+			}
+		}
 		return driveSpeed;
 	 }
 	 
@@ -264,19 +269,20 @@ public class DriveTrain extends DifferentialDrive {
 	  */
 	 public double turnAccelCurve(double target) {
 		 if (Math.abs(turnSpeed - target) > TURNACCEL) {
-	    		if (turnSpeed > target) {
-	    			turnSpeed = turnSpeed - TURNACCEL;
-	    		} else {
-	    			turnSpeed = turnSpeed + TURNACCEL;
-	    		}
-	    	} else {
-	    		turnSpeed = target;
-	    	}
-		 if (turnSpeed >= 0) {
-			 turnSpeed = Math.min(TURNMAX, turnSpeed);
-		 } else {
-			 turnSpeed = Math.max(-TURNMAX, turnSpeed);
-		 }
+			if (turnSpeed > target) {
+				turnSpeed = turnSpeed - TURNACCEL;
+			} else {
+				turnSpeed = turnSpeed + TURNACCEL;
+			}
+		} else {
+			turnSpeed = target;
+		}
+
+		if (turnSpeed >= 0) {
+			turnSpeed = Math.min(TURNMAX, turnSpeed);
+		} else {
+			turnSpeed = Math.max(-TURNMAX, turnSpeed);
+		}
 	    return turnSpeed;
 	}
 	
@@ -285,7 +291,7 @@ public class DriveTrain extends DifferentialDrive {
 	 * Arcade drive with an acceleration curve.
 	 * 
 	 * @param drive - the forward/backward value from -1 to 1.
-	 * @param turn - the turn value from -1 to 1.
+	 * @param turn - the turn left/right value from -1 to 1.
 	 */
 	public void accelDrive(double drive, double turn) {
 		drive = driveAccelCurve(drive);
