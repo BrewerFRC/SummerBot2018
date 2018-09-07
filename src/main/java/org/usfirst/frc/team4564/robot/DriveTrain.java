@@ -20,17 +20,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrain extends DifferentialDrive {
 	private static DriveTrain instance;
 	
-	public static double DRIVEACCEL = 0.01, DRIVEMIN = 0.4;
+	public int runcount = 0;
+	public static double DRIVEACCEL = 0.02, DRIVEMIN = 0.4;
 
 	public static final double TURNACCEL = 0.06;
-
-	public static final double TANKACCEL = 0.01;
-
+	public static final double TANKACCEL = 0.055;
 	public static final double TANKMIN = 0.40;
-
-	public static final double TURNMAX = 0.65;
-	
+	public static final double TURNMAX = 0.65;	
 	public static final double TANKMAX = 0.4;
+
+	public static final double DEADZONE = 0.06;
+
 	private static final double DISTANCE_PER_PULSE_L = 0.0098195208, DISTANCE_PER_PULSE_R = 0.0098293515;
 	private static final Spark 
 			frontL = new Spark(Constants.DRIVE_FL),
@@ -233,11 +233,13 @@ public class DriveTrain extends DifferentialDrive {
 	 */
 	public double driveAccelCurve(double target) {
 		//nullzone 
-		if (Math.abs(target) < .03) {
+		
+		if (Math.abs(target) < DEADZONE) {
 			target = 0;
 		}
 		//If the magnitude of current is greater than the minimum
 		//If the difference is greater than the allowed acceleration
+
 		if (Math.abs(driveSpeed - target) > DRIVEACCEL) {
 			//Accelerate in the correct direction
             if (driveSpeed > target) {
@@ -246,18 +248,20 @@ public class DriveTrain extends DifferentialDrive {
                 driveSpeed = driveSpeed + DRIVEACCEL;
             }
         } else {
-            driveSpeed = target;
+			Common.debug("I'm probably stopping really quickly. That can't be");
+			driveSpeed = target;
 		}
 		//If the magnitude of current speed is less than the minimum
 		//Move to the greater of the minimum or the driveSpeed.
-		if (Math.abs(target) > 0) {
+		if (Math.abs(target) > 0 && Math.abs(driveSpeed) < DRIVEMIN) {
 			if (target > 0) {
-				driveSpeed = Math.max(DRIVEMIN, driveSpeed);
-			}
-			else {
-				driveSpeed = Math.min(-DRIVEMIN, driveSpeed);
+				driveSpeed = DRIVEMIN;
+			} else {
+				driveSpeed = -DRIVEMIN;
 			}
 		}
+
+
 		return driveSpeed;
 	 }
 	 

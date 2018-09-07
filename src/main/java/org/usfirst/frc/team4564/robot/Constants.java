@@ -3,7 +3,7 @@ package org.usfirst.frc.team4564.robot;
 public class Constants {
 	public static final int
 	
-	REFRESH_RATE = 50,
+	REFRESH_RATE = 5,
 	
 	//DIO
 	DRIVE_FL = 6,

@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
 	private Proximity proximitysensor;
 	@Override
 	public void robotInit() {
-		super.setPeriod(1/Constants.REFRESH_RATE);
+		//super.setPeriod(1/Constants.REFRESH_RATE);
 		proximitysensor = new Proximity(Constants.IR_PORT);
 
 	}
