@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
 	}
 	@Override
 	public void autonomousInit() {
-
+		auto.start();
 	}
 
 	
@@ -47,15 +47,14 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		double forward = 0;
 		double turn = 0;
-		forward = driver.getY(GenericHID.Hand.kLeft);
+		/*forward = driver.getY(GenericHID.Hand.kLeft);
 		turn = driver.getX(GenericHID.Hand.kLeft);
-		
+		*/
 		dt.accelDrive(forward, turn);
-
-		///if(driver.getPressed("a")){
-			///auto.start();
-		///}
-		///auto.update();
+		if(driver.getPressed("a")){
+			auto.start();
+		}
+		auto.update();
 		/*
 		double power = driver.getY(GenericHID.Hand.kLeft);
 		double turn = driver.getX(GenericHID.Hand.kLeft);

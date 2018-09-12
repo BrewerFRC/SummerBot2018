@@ -3,7 +3,10 @@ package org.usfirst.frc.team4564.robot;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
+/*
+    Auto speed 0.7
+    Auto turn 0.37
+*/
 public class Auto{
     DriveTrain dt;
     ADXRS450_Gyro gyro;
@@ -22,8 +25,8 @@ public class Auto{
     private static final int LAUNCH_LEFT = 5;
     private static final int LAUNCH_RIGHT = 6;
     
-    public static final double INITIAL_TURN = 0.37;
-    public static final double INITIAL_SPEED = -0.73;
+    public static final double INITIAL_TURN = 0.037;
+    public static final double INITIAL_SPEED = 0.73;
 
     double speed;
     double turn;
@@ -41,6 +44,10 @@ public class Auto{
         this.speed = 0;
         this.turn = 0;
         init();
+    }
+
+    public void autoDrive(double speed, double turn){
+        this.dt.arcadeDrive(-speed, -turn);
     }
 
     public void init(){
@@ -67,26 +74,25 @@ public class Auto{
         else if (switchPos == LAUNCH_RIGHT){
             switch(state){
                 case IDLE:
-                    dt.arcadeDrive(0, 0);
+                    autoDrive(0, 0);
                     break;
                 case INIT:
                     timer = Common.time();
-
                     speed = SmartDashboard.getNumber("Speed",INITIAL_SPEED);
                     turn = SmartDashboard.getNumber("Turn", INITIAL_TURN);
-
                     state = FIRST_TURN;
                     break;
                 case FIRST_TURN:
-                    dt.arcadeDrive(speed, turn);
-                    if(Common.time() - timer >= 1500){
+                    autoDrive(speed, turn);
+                    if(Common.time() - timer >= 1200){
                         timer = Common.time();
                         state = SECOND_TURN;
                     }
                     break;
                 case SECOND_TURN:
-                    dt.arcadeDrive(speed, -turn);
-                    if(Common.time() - timer >= 1800){                        timer = Common.time();
+                    autoDrive(speed, -turn);
+                    if(Common.time() - timer >= 1500){
+                        timer = Common.time();
                         state = IDLE;
                     }
                     break;

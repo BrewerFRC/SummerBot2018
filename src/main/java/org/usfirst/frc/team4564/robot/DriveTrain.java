@@ -248,7 +248,7 @@ public class DriveTrain extends DifferentialDrive {
                 driveSpeed = driveSpeed + DRIVEACCEL;
             }
         } else {
-			Common.debug("I'm probably stopping really quickly. That can't be");
+
 			driveSpeed = target;
 		}
 		//If the magnitude of current speed is less than the minimum
