@@ -57,9 +57,10 @@ public class DriveTrain extends DifferentialDrive {
 		encoderL = new Encoder(Constants.DRIVE_ENCODER_LA, Constants.DRIVE_ENCODER_LB, false, EncodingType.k4X);
 		encoderL.setDistancePerPulse(DISTANCE_PER_PULSE_L);
 		encoderL.setSamplesToAverage(10);
-		encoderR = new Encoder(Constants.DRIVE_ENCODER_RA, Constants.DRIVE_ENCODER_RB, true, EncodingType.k4X);
+		/*encoderR = new Encoder(Constants.DRIVE_ENCODER_RA, Constants.DRIVE_ENCODER_RB, true, EncodingType.k4X);
 		encoderR.setDistancePerPulse(DISTANCE_PER_PULSE_R);
 		encoderR.setSamplesToAverage(10);
+		*/
 		//heading = new Heading();
 		//shifter = new Solenoid(Constants.PCM_CAN_ID, Constants.SHIFTER);
 		
@@ -105,7 +106,6 @@ public class DriveTrain extends DifferentialDrive {
 	 */
 	public void resetEncoders() {
 		encoderL.reset();
-		encoderR.reset();
 		pidL.reset();
 		pidR.reset();
 	}
