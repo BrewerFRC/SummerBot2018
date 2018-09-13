@@ -20,6 +20,8 @@ public class Robot extends TimedRobot {
 	private ADXRS450_Gyro gyro;
 	private Arm arm;
 	private Auto auto = new Auto(dt, gyro, arm);
+	private AdvAuto auto2;
+	private Heading heading;
 
 	private Proximity proximitysensor;
 	@Override
@@ -27,6 +29,11 @@ public class Robot extends TimedRobot {
 		//super.setPeriod(1/Constants.REFRESH_RATE);
 		proximitysensor = new Proximity(Constants.IR_PORT);
 
+		heading = new Heading();
+		heading.setPID(Constants.HEADINGP, Constants.HEADINGI, Constants.HEADINGD);
+		heading.calibrate();
+
+		auto2 = new AdvAuto(dt, heading);
 	}
 	@Override
 	public void autonomousInit() {
@@ -36,7 +43,7 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void autonomousPeriodic() {
-		auto.update();
+		auto2.update();
 	}
 	@Override
 	public void teleopInit() {
