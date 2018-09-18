@@ -41,7 +41,8 @@ public class Constants {
 
 	HEADINGP = DriveTrain.TURNMAX/10,
 	HEADINGI = 0,
-	HEADINGD = 0
+	HEADINGD = 0,
 
+	DRIVE_P = 0.05
 	;
 }

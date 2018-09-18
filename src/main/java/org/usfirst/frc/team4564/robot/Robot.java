@@ -21,7 +21,6 @@ public class Robot extends TimedRobot {
 	private Arm arm;
 	private Auto auto = new Auto(dt, gyro, arm);
 	private AdvAuto auto2;
-	private Heading heading;
 
 	private Proximity proximitysensor;
 	@Override
@@ -29,11 +28,8 @@ public class Robot extends TimedRobot {
 		//super.setPeriod(1/Constants.REFRESH_RATE);
 		proximitysensor = new Proximity(Constants.IR_PORT);
 
-		heading = new Heading();
-		heading.setPID(Constants.HEADINGP, Constants.HEADINGI, Constants.HEADINGD);
-		heading.calibrate();
-
-		auto2 = new AdvAuto(dt, heading);
+		auto2 = new AdvAuto(dt);
+		auto2.calibrate();
 	}
 	@Override
 	public void autonomousInit() {
