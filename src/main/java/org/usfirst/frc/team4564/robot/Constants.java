@@ -5,12 +5,13 @@ public class Constants {
 	
 	REFRESH_RATE = 5,
 	
-	//DIO
-	DRIVE_FL = 6,
-	DRIVE_FR = 8,
-	DRIVE_BL = 7,
-	DRIVE_BR = 9,
+	//PWM
+	DRIVE_FL = 0,
+	DRIVE_FR = 2,
+	DRIVE_BL = 1,
+	DRIVE_BR = 3,
 	
+	//DIO
 	DRIVE_ENCODER_LA = 1,
 	DRIVE_ENCODER_RA = 2,
 	DRIVE_ENCODER_LB = 3,

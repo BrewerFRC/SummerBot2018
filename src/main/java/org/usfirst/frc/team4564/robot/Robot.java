@@ -10,7 +10,6 @@ package org.usfirst.frc.team4564.robot;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -20,13 +19,14 @@ public class Robot extends TimedRobot {
 	private ADXRS450_Gyro gyro;
 	private Arm arm;
 	private Auto auto = new Auto(dt, gyro, arm);
+	private Intake intake;
 
 	private Proximity proximitysensor;
 	@Override
 	public void robotInit() {
 		//super.setPeriod(1/Constants.REFRESH_RATE);
 		proximitysensor = new Proximity(Constants.IR_PORT);
-
+		intake = new Intake();
 	}
 	@Override
 	public void autonomousInit() {
@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		auto.update();
+		intake.update();
 	}
 	@Override
 	public void teleopInit() {
@@ -47,15 +48,16 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		double forward = 0;
 		double turn = 0;
-		/*forward = driver.getY(GenericHID.Hand.kLeft);
+		forward = driver.getY(GenericHID.Hand.kLeft);
 		turn = driver.getX(GenericHID.Hand.kLeft);
-		*/
-		dt.accelDrive(forward, turn);
-		if(driver.getPressed("a")){
+		
+		dt.accelDrive(forward, -turn);
+		intake.update();
+		/*if(driver.getPressed("a")){
 			auto.start();
 		}
 		auto.update();
-		/*
+		
 		double power = driver.getY(GenericHID.Hand.kLeft);
 		double turn = driver.getX(GenericHID.Hand.kLeft);
 		

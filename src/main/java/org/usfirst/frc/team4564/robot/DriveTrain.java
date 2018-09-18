@@ -66,8 +66,8 @@ public class DriveTrain extends DifferentialDrive {
 		pidL = new PID(0.005, 0, 0, false, true, "velL");
 		pidR = new PID(0.005, 0, 0, false, true, "velR");
 		
-		left.setInverted(true);
-		right.setInverted(true);
+		left.setInverted(false);
+		right.setInverted(false);
 		
 		instance = this;
 	}
