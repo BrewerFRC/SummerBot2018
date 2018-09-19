@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		auto.start();
+		intake.reset();
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-
+		intake.reset();
 	}
 
 	@Override

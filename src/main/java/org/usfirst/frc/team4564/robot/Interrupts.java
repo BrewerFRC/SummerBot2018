@@ -5,11 +5,15 @@ public class Interrupts {
     private static boolean rt_button = false;
 
     public static boolean getAButton() {
-        return a_button;
+        boolean prev = a_button;
+        a_button = false;
+        return prev;
     }
 
     public static boolean getRT() {
-        return rt_button;
+        boolean prev = rt_button;
+        rt_button = false;
+        return prev;
     }
 
     public static void setAButton(boolean state) {

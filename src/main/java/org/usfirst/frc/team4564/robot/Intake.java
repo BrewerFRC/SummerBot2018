@@ -37,10 +37,11 @@ public class Intake {
 
     private double previousReading = 0;
 
-    private final double FULL_LOAD = 5, PARTIAL_LOAD = 7;
+    private final double FULL_LOAD = 3, PARTIAL_LOAD = 10;
 
     public Intake() {
         irInput = new Proximity(Constants.IR_PORT);
+        reset();
     }
 
     public void update() {
@@ -48,19 +49,28 @@ public class Intake {
         SmartDashboard.putNumber("State", state);
     }
 
+    public void reset() {
+        state = IDLE;
+    }
+
     private void doIntake() {
         switch (state) {
         case IDLE:
-            if (Interrupts.getAButton() == true) {
+            INTAKEMOT.set(0);
+            if (Interrupts.getAButton() == true || isPartiallyLoaded()) {
                 state = RECIEVE;
-                Interrupts.setAButton(false);
+            }
+            if (isFullyLoaded()) {
+                state = HOLD;
             }
             break;
         case RECIEVE:
             INTAKEMOT.set(RECIEVE_SPEED);
-            if (Interrupts.getAButton() == true) {
+            if (isFullyLoaded() == true) {
                 state = HOLD;
-                Interrupts.setAButton(false);
+            }
+            if (Interrupts.getAButton() == true) {
+                state = IDLE;
             }
             break;
         case HOLD:
@@ -69,16 +79,22 @@ public class Intake {
                 state = THROW;
                 Interrupts.setRT(false);
             }
+            if (isPartiallyLoaded() == false) {
+                state = IDLE;
+            }
             break;
         case THROW:
             INTAKEMOT.set(SOFT_THROW_SPEED);
 
+            if (isPartiallyLoaded() == false) {
+                state = IDLE;
+            }
             break;
         }
     }
 
     public double getCubeDistance() {
-        double reading = irInput.CheckInfaredSensor() * 0.1 + previousReading * 0.9;
+        double reading = irInput.ToDist((float) irInput.CheckInfaredSensor()) * 0.1 + previousReading * 0.9;
         previousReading = reading;
         return reading;
     }
