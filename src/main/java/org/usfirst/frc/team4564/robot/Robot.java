@@ -51,6 +51,11 @@ public class Robot extends TimedRobot {
 		forward = driver.getY(GenericHID.Hand.kLeft);
 		turn = driver.getX(GenericHID.Hand.kLeft);
 		
+		Common.dashNum("IR READING", intake.getCubeDistance());
+		boolean Common.dashBool("Is fully loaded", intake.isFullyLoaded());
+		boolean Common.dashBool("Is partially loaded", intake.isPartiallyLoaded());
+
+
 		dt.accelDrive(forward, -turn);
 		intake.update();
 		/*if(driver.getPressed("a")){
