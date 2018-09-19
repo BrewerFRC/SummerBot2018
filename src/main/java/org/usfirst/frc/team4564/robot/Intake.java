@@ -33,8 +33,14 @@ public class Intake {
     public static double HOLD_SPEED = -0.15f;
     public static double SOFT_THROW_SPEED = 0.6f;
 
-    public Intake() {
+    private Proximity irInput;
 
+    private double previousReading = 0;
+
+    private final double FULL_LOAD = 5, PARTIAL_LOAD = 7;
+
+    public Intake() {
+        irInput = new Proximity(Constants.IR_PORT);
     }
 
     public void update() {
@@ -69,5 +75,19 @@ public class Intake {
 
             break;
         }
+    }
+
+    public double getCubeDistance() {
+        double reading = irInput.CheckInfaredSensor() * 0.1 + previousReading * 0.9;
+        previousReading = reading;
+        return reading;
+    }
+
+    public boolean isPartiallyLoaded() {
+        return (getCubeDistance() < PARTIAL_LOAD);
+    }
+
+    public boolean isFullyLoaded() {
+        return (getCubeDistance() < FULL_LOAD);
     }
 }

@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// super.setPeriod(1/Constants.REFRESH_RATE);
-		proximitysensor = new Proximity(Constants.IR_PORT);
 		intake = new Intake();
 	}
 
@@ -46,12 +45,17 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		if (driver.getAButton() == true) {
+		if (driver.when("a") == true) {
 			Interrupts.setAButton(true);
 		}
 		if (driver.when("rightTrigger") == true) {
 			Interrupts.setRT(true);
 		}
+
+		Common.dashNum("IR READING", intake.getCubeDistance());
+		Common.dashBool("Is fully loaded", intake.isFullyLoaded());
+		Common.dashBool("Is partially loaded", intake.isPartiallyLoaded());
+
 		/*
 		 * double forward = 0; double turn = 0; forward =
 		 * driver.getY(GenericHID.Hand.kLeft); turn =
