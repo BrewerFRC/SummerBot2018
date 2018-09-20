@@ -24,10 +24,7 @@ Soft throw
 public class Intake {
     private static final int IDLE = 0, RECIEVE = 1, HOLD = 2, THROW = 3;
     public static int state = IDLE;
-    public static final Spark INTAKE2 = new Spark(Constants.INTAKE_1);
-    public static final Spark INTAKE1 = new Spark(Constants.INTAKE_2);
-
-    public static final SpeedControllerGroup INTAKEMOT = new SpeedControllerGroup(INTAKE1, INTAKE2);
+    public static final Spark INTAKEMOT = new Spark(Constants.INTAKE_1);
 
     public static double RECIEVE_SPEED = -0.65f;
     public static double HOLD_SPEED = -0.15f;
@@ -57,11 +54,12 @@ public class Intake {
         switch (state) {
         case IDLE:
             INTAKEMOT.set(0);
-            if (Interrupts.getAButton() == true || isPartiallyLoaded()) {
-                state = RECIEVE;
-            }
             if (isFullyLoaded()) {
                 state = HOLD;
+            }
+
+            if (Interrupts.getAButton() == true) {
+                state = RECIEVE;
             }
             break;
         case RECIEVE:

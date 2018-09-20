@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		// super.setPeriod(1/Constants.REFRESH_RATE);
 		intake = new Intake();
+		arm = new Arm();
 	}
 
 	@Override
@@ -65,6 +66,9 @@ public class Robot extends TimedRobot {
 		 * dt.accelDrive(forward, -turn);
 		 */
 		intake.update();
+		arm.ArmUpdate();
+
+		arm.SetArm(driver.getY(GenericHID.Hand.kRight));
 		/*
 		 * if(driver.getPressed("a")){ auto.start(); } auto.update();
 		 * 
