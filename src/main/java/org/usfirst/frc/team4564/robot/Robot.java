@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
 		 * 
 		 * dt.accelDrive(forward, -turn);
 		 */
-		// intake.update();
+		intake.update();
 		// arm.ArmUpdate();
 
 		arm.powerArm(driver.getY(GenericHID.Hand.kRight));

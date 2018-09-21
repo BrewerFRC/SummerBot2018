@@ -26,9 +26,9 @@ public class Intake {
     public static int state = IDLE;
     public static final Spark INTAKEMOT = new Spark(Constants.INTAKE_1);
 
-    public static double RECIEVE_SPEED = -0.65f;
-    public static double HOLD_SPEED = -0.15f;
-    public static double SOFT_THROW_SPEED = 0.6f;
+    public static double RECIEVE_SPEED = 0.65f;
+    public static double HOLD_SPEED = 0.25f;
+    public static double SOFT_THROW_SPEED = -0.6f;
 
     private Proximity irInput;
 
