@@ -19,7 +19,10 @@ public class Constants {
 			// Analog Input
 			IR_PORT = 1, ARM_POT = 0,
 
-			ARM_MIN_DEG = 0, ARM_MAX_DEG = 180
+			ARM_MIN_DEG = 0, ARM_MAX_DEG = 180,
+
+			// Solenoid
+			GEARBOX_PNU = 7, ARM_PNU_CLOSE = 6, ARM_PNU_OPEN = 5
 
 	;
 	public static final double

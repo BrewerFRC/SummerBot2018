@@ -63,13 +63,13 @@ public class Robot extends TimedRobot {
 		Common.dashBool("Is fully loaded", intake.isFullyLoaded());
 		Common.dashBool("Is partially loaded", intake.isPartiallyLoaded());
 
-		/*
-		 * double forward = 0; double turn = 0; forward =
-		 * driver.getY(GenericHID.Hand.kLeft); turn =
-		 * driver.getX(GenericHID.Hand.kLeft);
-		 * 
-		 * dt.accelDrive(forward, -turn);
-		 */
+		double forward = 0;
+		double turn = 0;
+		forward = driver.getY(GenericHID.Hand.kLeft);
+		turn = driver.getX(GenericHID.Hand.kLeft);
+
+		dt.accelDrive(-forward, -turn);
+
 		intake.update();
 		// arm.ArmUpdate();
 

@@ -2,6 +2,7 @@ package org.usfirst.frc.team4564.robot;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 
 /*
@@ -29,6 +30,9 @@ public class Intake {
     public static double RECIEVE_SPEED = 0.65f;
     public static double HOLD_SPEED = 0.25f;
     public static double SOFT_THROW_SPEED = -0.6f;
+    private Solenoid armClosed;
+    private Solenoid armOpen;
+    private Solenoid gearboxSolenoid;
 
     private Proximity irInput;
 
@@ -39,6 +43,10 @@ public class Intake {
     public Intake() {
         irInput = new Proximity(Constants.IR_PORT);
         reset();
+
+        armOpen = new Solenoid(Constants.ARM_PNU_OPEN);
+        armClosed = new Solenoid(Constants.ARM_PNU_CLOSE);
+        gearboxSolenoid = new Solenoid(Constants.GEARBOX_PNU);
     }
 
     public void update() {
@@ -54,6 +62,7 @@ public class Intake {
         switch (state) {
         case IDLE:
             INTAKEMOT.set(0);
+            armClosed();
             if (isFullyLoaded()) {
                 state = HOLD;
             }
@@ -67,12 +76,19 @@ public class Intake {
             if (isFullyLoaded() == true) {
                 state = HOLD;
             }
+
+            if (isPartiallyLoaded() == true) {
+                armClosed();
+            } else {
+                armOpen();
+            }
             if (Interrupts.getAButton() == true) {
                 state = IDLE;
             }
             break;
         case HOLD:
             INTAKEMOT.set(HOLD_SPEED);
+            armClosed();
             if (Interrupts.getRT() == true) {
                 state = THROW;
                 Interrupts.setRT(false);
@@ -83,12 +99,22 @@ public class Intake {
             break;
         case THROW:
             INTAKEMOT.set(SOFT_THROW_SPEED);
-
+            armClosed();
             if (isPartiallyLoaded() == false) {
                 state = IDLE;
             }
             break;
         }
+    }
+
+    private void armClosed() {
+        armClosed.set(true);
+        armOpen.set(false);
+    }
+
+    private void armOpen() {
+        armClosed.set(false);
+        armOpen.set(true);
     }
 
     public double getCubeDistance() {
