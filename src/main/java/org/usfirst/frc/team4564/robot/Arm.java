@@ -49,17 +49,21 @@ public class Arm {
 
     }
 
-    public void SetArm(double speed) {
+    public void setSpeed(double speed) {
+        arm.set(-speed * 0.25);
+    }
+
+    public void armSafety(double speed) {
         double gC = gCalc();
         SmartDashboard.putNumber("gCalc", gC);
 
-        if (GetDegree() > 75 && speed > gC) {
-            arm.set(gC);
+        if (GetDegree() > 75 && speed < gC) {
+            arm.setSpeed(gC);
 
-        } else if (GetDegree() < -75 && speed < gC) {
-            arm.set(gC);
+        } else if (GetDegree() < -75 && speed > gC) {
+            arm.setSpeed(gC);
         } else {
-            arm.set(-speed * 0.25);
+            arm.setSpeed(speed);
         }
 
     }
@@ -81,7 +85,7 @@ public class Arm {
     // call this for gravity adjusted power
     public void powerArm(double power) {
         double p = power - gCalc();
-        SetArm(p);
+        armSafety(p);
     }
 
 }
