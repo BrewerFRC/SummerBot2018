@@ -37,8 +37,6 @@ public class Arm {
     }
 
     public void ArmUpdate() {
-        SmartDashboard.putNumber("Potentiometer value", GetPosition());
-        SmartDashboard.putNumber("Potentiometer degree", GetDegree());
         /*
          * curV = position - lastpos; double power = veloPID.calc(position, curV);
          * 
@@ -49,22 +47,23 @@ public class Arm {
 
     }
 
-    public void setSpeed(double speed) {
-        arm.set(-speed * 0.25);
+    public void motor(double speed) {
+        speed = -speed;
+        speed = Math.max(speed, -0.55);
+        speed = Math.min(speed, 0.55);
+        arm.setSpeed(speed);
+        SmartDashboard.putNumber("safety speed", speed);
     }
 
     public void armSafety(double speed) {
         double gC = gCalc();
-        SmartDashboard.putNumber("gCalc", gC);
-
-        if (GetDegree() > 75 && speed < gC) {
-            arm.setSpeed(gC);
-
-        } else if (GetDegree() < -75 && speed > gC) {
-            arm.setSpeed(gC);
-        } else {
-            arm.setSpeed(speed);
+        if (GetDegree() > 85 && speed > -gC) {
+            speed = -gC;
         }
+        if (GetDegree() < -80 && speed < -gC) {
+            speed = -gC;
+        }
+        motor(speed);
 
     }
 
@@ -75,6 +74,9 @@ public class Arm {
     private double gCalc() {
         double radians = GetDegree() * Math.PI / 180;
         double Pg = Math.sin(radians) * G;
+        SmartDashboard.putNumber("gCalc", Pg);
+        SmartDashboard.putNumber("Potentiometer value", GetPosition());
+        SmartDashboard.putNumber("Potentiometer degree", GetDegree());
         return Pg;
     }
 
@@ -84,8 +86,14 @@ public class Arm {
 
     // call this for gravity adjusted power
     public void powerArm(double power) {
+        // apply deadzone
+        if (Math.abs(power) < .15) {
+            power = 0;
+        }
+        SmartDashboard.putNumber("rightY", power);
         double p = power - gCalc();
         armSafety(p);
+        SmartDashboard.putNumber("p", p);
     }
 
 }
