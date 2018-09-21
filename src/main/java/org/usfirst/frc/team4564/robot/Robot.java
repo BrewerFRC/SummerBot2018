@@ -9,6 +9,7 @@ package org.usfirst.frc.team4564.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
@@ -18,6 +19,7 @@ public class Robot extends TimedRobot {
 	private Arm arm;
 	private Auto auto = new Auto(dt, gyro, arm);
 	private Intake intake;
+	private Compressor compressor;
 
 	private Proximity proximitysensor;
 
@@ -26,6 +28,7 @@ public class Robot extends TimedRobot {
 		// super.setPeriod(1/Constants.REFRESH_RATE);
 		intake = new Intake();
 		arm = new Arm();
+		compressor = new Compressor();
 	}
 
 	@Override
@@ -54,6 +57,8 @@ public class Robot extends TimedRobot {
 			Interrupts.setRT(true);
 		}
 
+		compressor.setClosedLoopControl(true);
+
 		Common.dashNum("IR READING", intake.getCubeDistance());
 		Common.dashBool("Is fully loaded", intake.isFullyLoaded());
 		Common.dashBool("Is partially loaded", intake.isPartiallyLoaded());
@@ -68,7 +73,7 @@ public class Robot extends TimedRobot {
 		intake.update();
 		arm.ArmUpdate();
 
-		arm.SetArm(driver.getY(GenericHID.Hand.kRight));
+		arm.powerArm(driver.getY(GenericHID.Hand.kRight));
 		/*
 		 * if(driver.getPressed("a")){ auto.start(); } auto.update();
 		 * 
@@ -88,9 +93,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
-		if (driver.when("a")) {
-			gyro.calibrate();
-		}
-
+		compressor.setClosedLoopControl(true);
 	}
 }
