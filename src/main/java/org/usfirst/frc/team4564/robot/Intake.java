@@ -100,10 +100,13 @@ public class Intake {
         case THROW:
             INTAKEMOT.set(SOFT_THROW_SPEED);
             armClosed();
-            if (isPartiallyLoaded() == false) {
+            if (isPartiallyLoaded() == false && !Interrupts.getBButton() == true) {
                 state = IDLE;
             }
             break;
+        }
+        if (Interrupts.getBButton()) {
+            state = THROW;
         }
     }
 
