@@ -90,6 +90,9 @@ public class Robot extends TimedRobot {
 		if (driver.when("b") == true) {
 			Interrupts.setBButton(true);
 		}
+		if (driver.when("leftTrigger") == true) {
+			Interrupts.setHThrow(true);
+		}
 
 		compressor.setClosedLoopControl(true);
 
