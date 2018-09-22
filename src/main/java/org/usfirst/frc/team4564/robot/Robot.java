@@ -11,17 +11,20 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class Robot extends TimedRobot {
 	private Xbox driver = new Xbox(0);
 	private DriveTrain dt = new DriveTrain();
 	private ADXRS450_Gyro gyro;
 	private Arm arm;
-	private Auto auto = new Auto(dt, gyro, arm);
 	private Intake intake;
+	private Auto auto;
 	private Compressor compressor;
 
 	private Proximity proximitysensor;
+	private String gameData;
 
 	@Override
 	public void robotInit() {
@@ -29,6 +32,11 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		arm = new Arm();
 		compressor = new Compressor();
+		auto = new Auto(dt, gyro, arm, intake);
+		// SmartDashboard.putString("Auto type", "C");
+
+		SmartDashboard.putNumber("Auto type num", 0);
+
 	}
 
 	@Override
@@ -38,9 +46,32 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
+	public void disabledPeriodic() {
+		// super.disabledPeriodic();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		// Common.debug("Running periodic disabled");
+		if (gameData != null) {
+			Common.dashStr("Game Data", gameData);
+			if (gameData.length() == 3) {
+				auto.setGameData(gameData.toUpperCase());
+			}
+		}
+
+		if (SmartDashboard.getNumber("Auto type num", 0) == 0) {
+			auto.setGameData("CCC");
+			// Common.debug("Cross auto type");
+		}
+		// Common.debug(SmartDashboard.getString("Auto type", "Something isn't
+		// working"));
+		// Common.debug((String)SmartDashboard.getNumber("Auto type num", 0));
+		// auto.setGameData("CCC");
+	}
+
+	@Override
 	public void autonomousPeriodic() {
 		auto.update();
-		intake.update();
+		// arm.ArmUpdate();
+		// intake.update();
 	}
 
 	@Override

@@ -58,6 +58,10 @@ public class Intake {
         state = IDLE;
     }
 
+    public void setMotor(double speed) {
+        INTAKEMOT.set(speed);
+    }
+
     private void doIntake() {
         switch (state) {
         case IDLE:
@@ -110,7 +114,7 @@ public class Intake {
         }
     }
 
-    private void armClosed() {
+    public void armClosed() {
         armClosed.set(true);
         armOpen.set(false);
     }
