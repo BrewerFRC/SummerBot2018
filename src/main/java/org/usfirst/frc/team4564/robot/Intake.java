@@ -23,14 +23,14 @@ Soft throw
 */
 
 public class Intake {
-    private static final int IDLE = 0, RECIEVE = 1, HOLD = 2, THROW = 3, FULL_THROW = 4;
+    private static final int IDLE = 0, RECIEVE = 1, HOLD = 2, THROW = 3, FULL_SEND = 4;
     public static int state = IDLE;
     public static final Spark INTAKEMOT = new Spark(Constants.INTAKE_1);
 
     public static double RECIEVE_SPEED = 0.65f;
     public static double HOLD_SPEED = 0.25f;
     public static double SOFT_THROW_SPEED = -0.6f;
-    public static final double FULL_THROW_SPEED = -1f;
+    public static final double FULL_SEND_SPEED = -1f;
     private Solenoid armClosed;
     private Solenoid armOpen;
     private Solenoid gearboxSolenoid;
@@ -99,7 +99,7 @@ public class Intake {
                 Interrupts.setRT(false);
             }
             if (Interrupts.getHThrow() == true) {
-                state = FULL_THROW;
+                state = FULL_SEND;
             }
             if (isPartiallyLoaded() == false) {
                 state = IDLE;
@@ -113,8 +113,8 @@ public class Intake {
             }
             break;
 
-        case FULL_THROW:
-            INTAKEMOT.set(FULL_THROW_SPEED);
+        case FULL_SEND:
+            INTAKEMOT.set(FULL_SEND_SPEED);
             armClosed();
             if (isPartiallyLoaded() == false && !Interrupts.getBButton() == true) {
                 state = IDLE;
