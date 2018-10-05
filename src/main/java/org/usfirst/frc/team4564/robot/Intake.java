@@ -33,7 +33,6 @@ public class Intake {
     public static final double FULL_SEND_SPEED = -1f;
     private Solenoid armClosed;
     private Solenoid armOpen;
-    private Solenoid gearboxSolenoid;
 
     private Proximity irInput;
 
@@ -47,7 +46,6 @@ public class Intake {
 
         armOpen = new Solenoid(Constants.ARM_PNU_OPEN);
         armClosed = new Solenoid(Constants.ARM_PNU_CLOSE);
-        gearboxSolenoid = new Solenoid(Constants.GEARBOX_PNU);
     }
 
     public void update() {

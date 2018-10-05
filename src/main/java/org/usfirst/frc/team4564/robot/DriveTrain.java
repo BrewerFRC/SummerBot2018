@@ -2,6 +2,7 @@ package org.usfirst.frc.team4564.robot;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -38,7 +39,7 @@ public class DriveTrain extends DifferentialDrive {
 	private Encoder encoderL, encoderR;
 	private PID pidL, pidR;
 	private Heading heading;
-	// private Solenoid shifter;
+    private Solenoid gearboxSolenoid;
 	private double driveSpeed = 0, turnSpeed = 0;
 	private double tankLeft = 0, tankRight = 0;
 
@@ -56,7 +57,7 @@ public class DriveTrain extends DifferentialDrive {
 		encoderR.setDistancePerPulse(DISTANCE_PER_PULSE_R);
 		encoderR.setSamplesToAverage(10);
 		// heading = new Heading();
-		// shifter = new Solenoid(Constants.PCM_CAN_ID, Constants.SHIFTER);
+		gearboxSolenoid = new Solenoid(Constants.GEARBOX_PNU);
 
 		pidL = new PID(0.005, 0, 0, false, true, "velL");
 		pidR = new PID(0.005, 0, 0, false, true, "velR");
@@ -71,15 +72,15 @@ public class DriveTrain extends DifferentialDrive {
 	 * Shifts the drivetrain gearbox to high gear.
 	 */
 
-	public void shiftHigh() {
-		// shifter.set(false);
+	public void shiftUp() {
+		gearboxSolenoid.set(false);
 	}
 
 	/**
 	 * Shifts the drivetrain gearbox to low gear.
 	 */
-	public void shiftLow() {
-		// shifter.set(true);
+	public void shiftDown() {
+		gearboxSolenoid.set(true);
 	}
 
 	/**

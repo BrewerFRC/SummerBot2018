@@ -94,6 +94,15 @@ public class Robot extends TimedRobot {
 			Interrupts.setHThrow(true);
 		}
 
+		if (driver.when("dPadUp")) {
+			dt.shiftUp();
+		}
+
+		if (driver.when("dPadDown")) {
+			dt.shiftDown() ;
+		}
+
+
 		compressor.setClosedLoopControl(true);
 
 		Common.dashNum("IR READING", intake.getCubeDistance());
