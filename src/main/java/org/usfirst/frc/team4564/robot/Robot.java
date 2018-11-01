@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SerialPort;
 
 public class Robot extends TimedRobot {
 	private Xbox driver = new Xbox(0);
@@ -22,6 +23,7 @@ public class Robot extends TimedRobot {
 	private Intake intake;
 	private Auto auto;
 	private Compressor compressor;
+	private SerialPort sp;
 
 	private Proximity proximitysensor;
 	private String gameData;
@@ -29,6 +31,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// super.setPeriod(1/Constants.REFRESH_RATE);
+		sp = new SerialPort(9600, SerialPort.Port.kMXP);
 		intake = new Intake();
 		arm = new Arm();
 		compressor = new Compressor();
@@ -140,5 +143,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		compressor.setClosedLoopControl(true);
+		sp.writeString("A");
 	}
 }
