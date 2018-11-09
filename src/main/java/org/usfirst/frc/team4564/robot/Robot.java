@@ -23,15 +23,18 @@ public class Robot extends TimedRobot {
 	private Intake intake;
 	private Auto auto;
 	private Compressor compressor;
-	private SerialPort sp;
+	private LED led;
 
 	private Proximity proximitysensor;
 	private String gameData;
 
+	private byte brightness = 0;
+
 	@Override
 	public void robotInit() {
 		// super.setPeriod(1/Constants.REFRESH_RATE);
-		sp = new SerialPort(9600, SerialPort.Port.kMXP);
+		led = new LED();
+		System.out.println("robot init starting");
 		intake = new Intake();
 		arm = new Arm();
 		compressor = new Compressor();
@@ -102,9 +105,8 @@ public class Robot extends TimedRobot {
 		}
 
 		if (driver.when("dPadDown")) {
-			dt.shiftDown() ;
+			dt.shiftDown();
 		}
-
 
 		compressor.setClosedLoopControl(true);
 
@@ -123,6 +125,9 @@ public class Robot extends TimedRobot {
 		// arm.ArmUpdate();
 
 		arm.powerArm(driver.getY(GenericHID.Hand.kRight));
+
+		led.update();
+		led.setMode(LED.TELEOP);
 		/*
 		 * if(driver.getPressed("a")){ auto.start(); } auto.update();
 		 * 
@@ -135,7 +140,7 @@ public class Robot extends TimedRobot {
 		 * double infaredRaw = proximitysensor.CheckInfaredSensor(); double infaredDist
 		 * = proximitysensor.ToDist((float)infaredRaw);
 		 * 
-		 * SmartDashboard.putNumber("True Infared Dist", infaredDist);
+		 * SmartDashboard.putNumber("GTrue Infared Dist", infaredDist);
 		 * dt.arcadeDrive(power, turn);
 		 */
 	}
@@ -143,6 +148,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		compressor.setClosedLoopControl(true);
-		sp.writeString("A");
+		// byte[] data = new byte[] { (byte) 0xFF, 35, (byte) 254, (byte) 254 };
+		// sp.write(data, 4);
+		brightness++;
 	}
 }

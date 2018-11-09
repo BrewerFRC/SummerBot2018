@@ -39,7 +39,7 @@ public class DriveTrain extends DifferentialDrive {
 	private Encoder encoderL, encoderR;
 	private PID pidL, pidR;
 	private Heading heading;
-    private Solenoid gearboxSolenoid;
+	private Solenoid gearboxSolenoid;
 	private double driveSpeed = 0, turnSpeed = 0;
 	private double tankLeft = 0, tankRight = 0;
 
