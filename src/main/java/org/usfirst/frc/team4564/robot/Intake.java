@@ -73,6 +73,14 @@ public class Intake {
             if (Interrupts.getAButton() == true) {
                 state = RECIEVE;
             }
+            // New 10/9/18 BOTB
+            if (Interrupts.getRT() == true) {
+                state = THROW;
+                Interrupts.setRT(false);
+            }
+            if (Interrupts.getHThrow() == true) {
+                state = FULL_SEND;
+            }
             break;
         case RECIEVE:
             INTAKEMOT.set(RECIEVE_SPEED);
@@ -106,7 +114,7 @@ public class Intake {
         case THROW:
             INTAKEMOT.set(SOFT_THROW_SPEED);
             armClosed();
-            if (isPartiallyLoaded() == false && !Interrupts.getBButton() == true) {
+            if (isPartiallyLoaded() == false && Interrupts.getBButton() == false) {
                 state = IDLE;
             }
             break;
@@ -114,14 +122,14 @@ public class Intake {
         case FULL_SEND:
             INTAKEMOT.set(FULL_SEND_SPEED);
             armClosed();
-            if (isPartiallyLoaded() == false && !Interrupts.getBButton() == true) {
+            if (isPartiallyLoaded() == false && Interrupts.getBButton() == false) {
                 state = IDLE;
             }
             break;
         }
-        if (Interrupts.getBButton()) {
-            state = THROW;
-        }
+        /*
+         * if (Interrupts.getBButton()) { state = THROW; }
+         */
     }
 
     public void armClosed() {

@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
 	private Intake intake;
 	private Auto auto;
 	private Compressor compressor;
-	private LED led;
+	// private LED led;
 
 	private Proximity proximitysensor;
 	private String gameData;
@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		// super.setPeriod(1/Constants.REFRESH_RATE);
-		led = new LED();
+		// led = new LED();
 		System.out.println("robot init starting");
 		intake = new Intake();
 		arm = new Arm();
@@ -126,8 +126,8 @@ public class Robot extends TimedRobot {
 
 		arm.powerArm(driver.getY(GenericHID.Hand.kRight));
 
-		led.update();
-		led.setMode(LED.TELEOP);
+		// led.update();
+		// led.setMode(LED.TELEOP);
 		/*
 		 * if(driver.getPressed("a")){ auto.start(); } auto.update();
 		 * 
